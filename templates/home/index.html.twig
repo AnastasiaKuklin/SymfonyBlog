@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <a href="{{ path('admin.index') }}">Администрирование</a>
+    {% for item in articles %}
+        <article>
+            <h2>{{ item.title }}</h2>
+            <a href="{{ path('app_article_edit', {'id': item.id}) }}">Редактировать</a>
+            <div class="article-content">
+                {{ item.body|raw|nl2br  }}
+            </div>
+            <div>
+                Дата создания: {{ item.createdAt|date('d.m.Y H:i:s') }}, Автор: {{ item.author }}
+            </div>
+        </article>
+    {% endfor %}
+</div>
+{% endblock %}
