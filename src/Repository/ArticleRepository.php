@@ -22,13 +22,18 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     
-    public function getRecentArticles(int $count)
+    public function getRecentArticles(int $count, ?string $search = null): \Doctrine\ORM\QueryBuilder
     {
-        return $this->createQueryBuilder('q')
+        $query = $this->createQueryBuilder('q')
             ->orderBy('q.createdAt', 'desc')
-            ->getQuery()
-            ->setMaxResults($count)
-            ->getResult();
+            ->setMaxResults($count);
+
+        if ($search) {
+            $query->andWhere('q.title like :search or q.body like :search')
+                ->setParameter('search', '%'. $search . '%');
+        }
+    
+        return $query;
     }
 
 //    /**
