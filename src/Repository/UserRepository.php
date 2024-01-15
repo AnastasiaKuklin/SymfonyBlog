@@ -37,7 +37,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+
     }
+
+    public function getByApiKey(string $apiKey): ?User
+    {
+        return $this->findOneBy(['apiKey' => $apiKey]);
+    }
+
+}
+    
+
+    
 
 //    /**
 //     * @return User[] Returns an array of User objects
@@ -63,4 +74,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+
